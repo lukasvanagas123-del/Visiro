@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visiro Investor Demo</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    main { max-width: 960px; margin: 0 auto; padding: 56px 16px; }
+    h1 { font-size: clamp(2rem, 6vw, 3.2rem); margin: .25rem 0; letter-spacing: -.02em; }
+    .lead { color: var(--muted); font-size: 1.15rem; max-width: 640px; }
+    .actions { display: flex; gap: .75rem; flex-wrap: wrap; margin: 1.5rem 0 2.5rem; }
+    .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .plan { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; box-shadow: var(--shadow); text-decoration: none; color: var(--text); display: block; }
+    .plan:hover { border-color: var(--accent); }
+    .plan .p { font-size: 1.8rem; font-weight: 800; }
+    .plan .m { color: var(--muted); font-size: .85rem; }
+    .logo { color: var(--accent); font-size: 2.5rem; }
+  </style>
+</head>
+<body>
+  <div class="placeholder-banner">Sample content: product copy, plans and numbers are placeholders in <code>assets/config.js</code></div>
+  <main>
+    <div class="logo">◐</div>
+    <h1 id="name">Visiro</h1>
+    <p class="lead" id="one"></p>
+    <div class="actions">
+      <a class="btn btn-primary" href="deck/">▶ Open pitch deck</a>
+      <a class="btn" href="demo/">Open interactive demo</a>
+    </div>
+    <h2>Try each plan</h2>
+    <div class="plans" id="plans"></div>
+  </main>
+  <script src="assets/config.js"></script>
+  <script>
+    const C = window.VISIRO;
+    document.getElementById("name").textContent = C.product.name;
+    document.getElementById("one").textContent = C.product.oneLiner;
+    document.getElementById("plans").innerHTML = C.plans.map((p) => {
+      const price = p.price === null ? "Custom" : "$" + p.price;
+      return `<a class="plan" href="demo/?plan=${p.id}"><span class="badge">${p.name}</span>
+        <div class="p">${price}</div><div class="m">${p.period}</div><div class="m" style="margin-top:.5rem">${p.audience}</div></a>`;
+    }).join("");
+  </script>
+</body>
+</html>
